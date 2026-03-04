@@ -31,6 +31,10 @@ public:
         cout << "Task Description: " << description << endl;
         cout << "Task Due date: " << dueDate << endl;
     }
+
+    void setTitle(string t) { title = t; };
+    void setDescription(string d) { description = d; }
+    void setDueDate(string dd) { dueDate = dd; }
 };
 
 class TaskManager {
@@ -46,9 +50,10 @@ protected:
     void unloadTasks();
 
 public:
+    void editTask(string &t);
     static TaskManager* getTaskManager() {
         if(isObjectCreated == false) {
-            isObjectCreated == true;
+            isObjectCreated = true;
                return new TaskManager();
         } else {
             cout << "\nYou can get only one task manager" << endl;
@@ -111,9 +116,10 @@ int TaskManager::menu() {
     int choice;
     cout << endl;
     cout << "\n1. Add New task: ";
-    cout << "\n2. Delete Task: ";
+    cout << "\n2. Delete task: ";
     cout << "\n3. View All Tasks: ";
-    cout << "\n4. Exit...";
+    cout << "\n4. Edit task: ";
+    cout << "\n5. Exit...";
     cout << "\nEnter your choice: ";
     cin >> choice;
 
@@ -193,6 +199,45 @@ void TaskManager::addTask() {
     }
 }
 
+void TaskManager::editTask(string &t) {
+    bool found = false;
+
+    for(auto &task : tasks) {
+        if(task.getTitle() == t) {
+            found = true;
+
+            string newTitle, newDesc, newDate;
+            cout << "\nEditing Task: \n";
+            task.printTask();
+
+            cout << "\nEnter new title(Leave blank to keep same) :";
+            getline(cin, newTitle);
+
+            cout << "ENter new Description(Leav blank to keep same): ";
+            getline(cin, newDesc);
+
+            cout << "\nEnter new due date(Leave blank to keep same): ";
+            getline(cin, newDate);
+
+            if(!newTitle.empty())
+              task.setTitle(newTitle);
+
+            if(!newDesc.empty())
+              task.setDescription(newDesc);
+
+            if(!newDate.empty())
+              task.setDueDate(newDate);
+
+            cout << "\nTask updated successfully\n";
+            break;
+              
+        }
+    }
+
+    if(!found)
+      cout << "\nTask not found\n";
+}
+
 
 void TaskManager::deleteTask(string &t) {
     forward_list <TaskNode>::iterator it, it1;
@@ -259,6 +304,12 @@ int main() {
                 break;
 
             case 4:
+                cout << "\nEnter title of the task to edit: ";
+                getline(cin, temp);
+                tm-> editTask(temp);
+                break;
+
+            case 5:
                 delete tm;
                 exit(0);
 
