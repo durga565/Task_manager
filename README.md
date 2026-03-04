@@ -11,6 +11,7 @@ The program supports adding, deleting, viewing, saving, and loading tasks.
 ## 📝 Problem Statement
 Create a task manager that allows users to:
 - Add tasks
+- Edit Task
 - Delete tasks
 - View all tasks
 
@@ -21,13 +22,16 @@ The system must:
 
 ---
 
-## 🚀 Features
+### 🚀 Features
 
 ### ➕ Add a Task
 - Users can add a task with:
   - Title
   - Description
   - Due Date
+ 
+### ✏️ Edit Task
+- Users can edit the saved task by providing it's title if not want change leave blank ( It's allow to edit description, due date also )
 
 ### ❌ Delete a Task
 - Users can delete a task by providing its title.
